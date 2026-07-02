@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+env/
+venv/
+.env/
+.venv/
+env310/
+
+# Generated data / outputs
+Myo_PuertasAbiertas_3DOF/
+outputs/*.csv
+outputs/*.json
+data/raw/
+data/processed/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
