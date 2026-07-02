@@ -2,11 +2,11 @@
 
 
 
-This document describes the basic setup required to run the Myo Open Door 3DOF Demo on Windows.
+This document describes the basic setup required to run the \*\*Myo Open Door 3DOF Demo\*\* on Windows.
 
 
 
-The demo uses a Myo Armband to estimate three upper-limb setpoints and send them to LabVIEW through UDP.
+The demo uses a \*\*Myo Armband\*\* to estimate three upper-limb setpoints and send them to LabVIEW through UDP.
 
 
 
@@ -180,7 +180,7 @@ The recommended method is to define the `MYO\_SDK\_PATH` environment variable.
 
 
 
-Example:
+Example for the current PowerShell session:
 
 
 
