@@ -44,7 +44,7 @@ The LabVIEW VI must be configured to listen to the same UDP port.
 The UDP message has the following format:
 
 ```text
-<q_shoulder_rad>,<q_elbow_rad>,<q_rot_rad>\n
+q_shoulder_rad, q_elbow_rad, q_rot_rad
 ```
 
 Example:
