@@ -57,7 +57,7 @@ IMU_FS = 50.0
 
 # hombro flex/ext
 TILT_AXIS = "tilt_z"
-SIGN_SHO = -1          # (tú ya viste que hacia adelante bajaba) -> invertimos
+SIGN_SHO = -1          # (hacia adelante bajaba) -> invertimos
 SHO_MIN_DEG, SHO_MAX_DEG = -20.0,  140.0            #------------------------------------------------------------------------------------------------
 
 # codo por EMG amplitude
@@ -65,9 +65,9 @@ ELB_MIN_DEG, ELB_MAX_DEG = 0.0, 100.0               #---------------------------
 
 # rotación de hombro (twist) por quaternion (una sola Myo)
 # NOTA: ARM_AXIS_LOCAL define el eje longitudinal del brazo en el marco del sensor Myo.
-# Si la rotación sale rara/invertida, prueba (1,0,0) o (0,0,1) o cambia SIGN_ROT.
-ROBOT_AXIS_WORLD = (0.0, 0.0, 1.0)  # eje FIJO del motor de rotación del exo en marco 'global' (ajusta: (1,0,0)/(0,1,0)/(0,0,1))
-SIGN_ROT = -1.0                    # invierte si rota al revés
+# Si la rotación sale rara/invertida, probar (1,0,0) o (0,0,1) o cambiar SIGN_ROT.
+ROBOT_AXIS_WORLD = (0.0, 0.0, 1.0)  # eje FIJO del motor de rotación del exo en marco 'global' (ajustar: (1,0,0)/(0,1,0)/(0,0,1))
+SIGN_ROT = -1.0                    # invertir si rota al revés
 ROT_MIN_DEG = -40.0                # límites del motor (deg)
 ROT_MAX_DEG = 40.0                 # límites del motor (deg)
 TAU_ROT_SEC = 0.20                # suavizado setpoint rotación
@@ -446,7 +446,7 @@ class IMUEMGCollector(myo.DeviceListener):
             self.emg_max = self.emg_rest + 1.0
         self._calib_stage = 2
         self.is_ready = True
-        print(f"[CAL] OK etapa 2. emg_max≈{self.emg_max:.2f}  -> listo ✅", flush=True)
+        print(f"[CAL] OK etapa 2. emg_max≈{self.emg_max:.2f}  -> listo", flush=True)
         print("[INFO] Control activo. Teclas: R=recenter | Space=hold | Esc=stop", flush=True)
 
     def on_emg(self, event):
@@ -499,7 +499,7 @@ class IMUEMGCollector(myo.DeviceListener):
 
         o = event.orientation
         quat = (float(o.x), float(o.y), float(o.z), float(o.w))
-        a = event.acceleration  # <-- tu librería usa acceleration
+        a = event.acceleration 
         g = event.gyroscope
 
         # gravedad LPF
@@ -684,7 +684,7 @@ class RealtimePlot(QtWidgets.QWidget):
         self.plot2.setXRange(t_min, t_max, padding=0.02)
 
         if ready:
-            self.lbl.setText(f"Estado: LISTO ✅ | HOLD={hold} | UDP -> {LV_HOST}:{LV_PORT}")
+            self.lbl.setText(f"Estado: LISTO | HOLD={hold} | UDP -> {LV_HOST}:{LV_PORT}")
         else:
             if stage == 0:
                 self.lbl.setText("Calibración Etapa 1/2: brazo abajo RELAJADO...")
