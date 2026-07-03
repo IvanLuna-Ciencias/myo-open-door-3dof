@@ -57,7 +57,7 @@ Additional technical documentation is available in:
 - [Myo acquisition](docs/myo_acquisition.md)
 - [UDP LabVIEW protocol](docs/udp_labview_protocol.md)
 - [Calibration procedure](docs/calibration.md)
-
+- [LabVIEW VI notes](docs/labview_vi.md)
 
 ## Requirements
 
