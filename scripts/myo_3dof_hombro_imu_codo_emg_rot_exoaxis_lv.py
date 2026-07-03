@@ -24,7 +24,7 @@ Ajustes rápidos:
 - Si tilt correcto no es z: cambia TILT_AXIS a tilt_x/tilt_y
 """
 
-import sys, os, re, csv, json, datetime, math, socket, time
+import sys, os, re, csv, json, datetime, math, socket, time, argparse
 from pathlib import Path
 from threading import Lock
 from collections import deque
@@ -89,6 +89,110 @@ DEADBAND_SHO_DEG = 0.6
 DEADBAND_ELB_DEG = 0.6
 RATE_SHO_DPS = 120.0
 RATE_ELB_DPS = 220.0
+
+# ========= CONFIG FILE SUPPORT =========
+DEFAULT_CONFIG_PATH = Path(__file__).resolve().parents[1] / "configs" / "demo_3dof.json"
+
+FLUSH_EVERY = 50
+PLOT_RING_LEN = 1500
+PLOT_WINDOW_SEC = 12.0
+PLOT_UPDATE_MS = 50
+
+
+def load_config(config_path=None):
+    """Load JSON configuration file. If it does not exist, keep script defaults."""
+    path = Path(config_path) if config_path else DEFAULT_CONFIG_PATH
+
+    if not path.exists():
+        print(f"[WARN] Config file not found: {path}. Using script defaults.", flush=True)
+        return {}, path
+
+    with open(path, "r", encoding="utf-8-sig") as f:
+        cfg = json.load(f)
+
+    return cfg, path
+
+
+def apply_config(cfg):
+    """Apply configuration values to the existing global parameters."""
+    global SDK_PATH, BASE_DIR, USUARIO, EJERCICIO, NOTAS
+    global LV_HOST, LV_PORT, LV_ENABLED
+    global IMU_FS
+    global TILT_AXIS, SIGN_SHO, SHO_MIN_DEG, SHO_MAX_DEG
+    global ELB_MIN_DEG, ELB_MAX_DEG
+    global ROBOT_AXIS_WORLD, SIGN_ROT, ROT_MIN_DEG, ROT_MAX_DEG
+    global TAU_ROT_SEC, DEADBAND_ROT_DEG, RATE_ROT_DPS
+    global CALIB_SEC
+    global TAU_G_SEC, TAU_SHO_SEC, TAU_EMG_SEC, TAU_ELB_SEC
+    global DEADBAND_SHO_DEG, DEADBAND_ELB_DEG, RATE_SHO_DPS, RATE_ELB_DPS
+    global FLUSH_EVERY, PLOT_RING_LEN, PLOT_WINDOW_SEC, PLOT_UPDATE_MS
+
+    myo_cfg = cfg.get("myo", {})
+    sdk_path_env = myo_cfg.get("sdk_path_env", "MYO_SDK_PATH")
+    default_sdk_path = myo_cfg.get("default_sdk_path", SDK_PATH)
+    SDK_PATH = os.environ.get(sdk_path_env, default_sdk_path)
+    IMU_FS = float(myo_cfg.get("imu_fs_hz", IMU_FS))
+
+    session_cfg = cfg.get("session", {})
+    BASE_DIR = Path(session_cfg.get("base_dir", str(BASE_DIR)))
+    USUARIO = session_cfg.get("user", USUARIO)
+    EJERCICIO = session_cfg.get("exercise", EJERCICIO)
+    NOTAS = session_cfg.get("notes", NOTAS)
+
+    lv_cfg = cfg.get("labview", {})
+    LV_HOST = lv_cfg.get("host", LV_HOST)
+    LV_PORT = int(lv_cfg.get("port", LV_PORT))
+    LV_ENABLED = bool(lv_cfg.get("enabled", LV_ENABLED))
+
+    cal_cfg = cfg.get("calibration", {})
+    CALIB_SEC = float(cal_cfg.get("duration_sec", CALIB_SEC))
+
+    shoulder_cfg = cfg.get("shoulder", {})
+    TILT_AXIS = shoulder_cfg.get("tilt_axis", TILT_AXIS)
+    SIGN_SHO = float(shoulder_cfg.get("sign", SIGN_SHO))
+    SHO_MIN_DEG = float(shoulder_cfg.get("min_deg", SHO_MIN_DEG))
+    SHO_MAX_DEG = float(shoulder_cfg.get("max_deg", SHO_MAX_DEG))
+    TAU_G_SEC = float(shoulder_cfg.get("tau_gravity_sec", TAU_G_SEC))
+    TAU_SHO_SEC = float(shoulder_cfg.get("tau_setpoint_sec", TAU_SHO_SEC))
+    DEADBAND_SHO_DEG = float(shoulder_cfg.get("deadband_deg", DEADBAND_SHO_DEG))
+    RATE_SHO_DPS = float(shoulder_cfg.get("rate_limit_dps", RATE_SHO_DPS))
+
+    elbow_cfg = cfg.get("elbow", {})
+    ELB_MIN_DEG = float(elbow_cfg.get("min_deg", ELB_MIN_DEG))
+    ELB_MAX_DEG = float(elbow_cfg.get("max_deg", ELB_MAX_DEG))
+    TAU_EMG_SEC = float(elbow_cfg.get("tau_emg_sec", TAU_EMG_SEC))
+    TAU_ELB_SEC = float(elbow_cfg.get("tau_setpoint_sec", TAU_ELB_SEC))
+    DEADBAND_ELB_DEG = float(elbow_cfg.get("deadband_deg", DEADBAND_ELB_DEG))
+    RATE_ELB_DPS = float(elbow_cfg.get("rate_limit_dps", RATE_ELB_DPS))
+
+    rotation_cfg = cfg.get("rotation", {})
+    ROBOT_AXIS_WORLD = tuple(rotation_cfg.get("robot_axis_world", ROBOT_AXIS_WORLD))
+    SIGN_ROT = float(rotation_cfg.get("sign", SIGN_ROT))
+    ROT_MIN_DEG = float(rotation_cfg.get("min_deg", ROT_MIN_DEG))
+    ROT_MAX_DEG = float(rotation_cfg.get("max_deg", ROT_MAX_DEG))
+    TAU_ROT_SEC = float(rotation_cfg.get("tau_setpoint_sec", TAU_ROT_SEC))
+    DEADBAND_ROT_DEG = float(rotation_cfg.get("deadband_deg", DEADBAND_ROT_DEG))
+    RATE_ROT_DPS = float(rotation_cfg.get("rate_limit_dps", RATE_ROT_DPS))
+
+    logging_cfg = cfg.get("logging", {})
+    FLUSH_EVERY = int(logging_cfg.get("flush_every_samples", FLUSH_EVERY))
+
+    plot_cfg = cfg.get("plot", {})
+    PLOT_RING_LEN = int(plot_cfg.get("ring_length_samples", PLOT_RING_LEN))
+    PLOT_WINDOW_SEC = float(plot_cfg.get("window_sec", PLOT_WINDOW_SEC))
+    PLOT_UPDATE_MS = int(plot_cfg.get("update_ms", PLOT_UPDATE_MS))
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Myo Open Door 3DOF Demo: Myo IMU/EMG to LabVIEW UDP setpoints."
+    )
+    parser.add_argument(
+        "--config",
+        default=str(DEFAULT_CONFIG_PATH),
+        help="Path to the JSON configuration file."
+    )
+    return parser.parse_args()
 
 # -------------------- utils --------------------
 def sanitize_name(s: str) -> str:
@@ -215,8 +319,12 @@ class LVUDPSender:
 
 # ================== LISTENER ==================
 class IMUEMGCollector(myo.DeviceListener):
-    def __init__(self, csv_writer, csv_file, lv_sender: LVUDPSender, ring_len=1500, flush_every=50):
+    def __init__(self, csv_writer, csv_file, lv_sender: LVUDPSender, ring_len=None, flush_every=None):
         super().__init__()
+        if ring_len is None:
+            ring_len = PLOT_RING_LEN
+        if flush_every is None:
+            flush_every = FLUSH_EVERY
         self.csv_writer = csv_writer
         self.csv_file = csv_file
         self.lv_sender = lv_sender
@@ -553,7 +661,7 @@ class RealtimePlot(QtWidgets.QWidget):
 
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update_plot)
-        self.timer.start(50)
+        self.timer.start(int(PLOT_UPDATE_MS))
 
         QtWidgets.QShortcut(QtCore.Qt.Key_Escape, self, activated=self.stop_and_close)
         QtWidgets.QShortcut(QtCore.Qt.Key_R, self, activated=self.collector.request_recenter)
@@ -570,7 +678,7 @@ class RealtimePlot(QtWidgets.QWidget):
         self.curve_emg.setData(t, emg)
 
         t_max = t[-1]
-        window_sec = 12.0
+        window_sec = float(PLOT_WINDOW_SEC)
         t_min = max(0.0, t_max - window_sec)
         self.plot.setXRange(t_min, t_max, padding=0.02)
         self.plot2.setXRange(t_min, t_max, padding=0.02)
@@ -591,6 +699,11 @@ class RealtimePlot(QtWidgets.QWidget):
 
 # ================== MAIN ==================
 def main():
+    args = parse_args()
+    cfg, cfg_path = load_config(args.config)
+    apply_config(cfg)
+    print(f"[INFO] Config -> {cfg_path}", flush=True)
+
     usuario = sanitize_name(USUARIO)
     ejercicio = sanitize_name(EJERCICIO)
     serie = next_series_for(usuario, ejercicio)
@@ -630,6 +743,7 @@ def main():
         "exercise": ejercicio,
         "serie": serie,
         "timestamp_start": ts_str,
+        "config_file": str(cfg_path.resolve()) if cfg_path.exists() else str(cfg_path),
         "csv_file": str(csv_path.resolve()),
         "notes": NOTAS,
         "labview_udp": {"enabled": LV_ENABLED, "host": LV_HOST, "port": LV_PORT},
