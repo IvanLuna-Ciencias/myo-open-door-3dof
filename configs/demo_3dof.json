@@ -1,0 +1,70 @@
+﻿{
+  "project": {
+    "name": "Myo Open Door 3DOF Demo",
+    "description": "Real-time Myo Armband demo for 3-DOF upper-limb setpoint generation and LabVIEW UDP communication."
+  },
+
+  "myo": {
+    "sdk_path_env": "MYO_SDK_PATH",
+    "default_sdk_path": "C:\\Users\\Ivan Luna\\Downloads\\myo-sdk-win-0.9.0\\myo-sdk-win-0.9.0",
+    "imu_fs_hz": 50.0
+  },
+
+  "session": {
+    "base_dir": "outputs",
+    "user": "puertas_abiertas",
+    "exercise": "demo_3dof",
+    "notes": ""
+  },
+
+  "labview": {
+    "host": "172.22.11.2",
+    "port": 5005,
+    "enabled": true,
+    "payload": "<q_shoulder_rad>,<q_elbow_rad>,<q_rot_rad>\\n"
+  },
+
+  "calibration": {
+    "duration_sec": 2.0
+  },
+
+  "shoulder": {
+    "tilt_axis": "tilt_z",
+    "sign": -1.0,
+    "min_deg": -20.0,
+    "max_deg": 140.0,
+    "tau_gravity_sec": 0.60,
+    "tau_setpoint_sec": 0.22,
+    "deadband_deg": 0.6,
+    "rate_limit_dps": 120.0
+  },
+
+  "elbow": {
+    "min_deg": 0.0,
+    "max_deg": 100.0,
+    "tau_emg_sec": 0.15,
+    "tau_setpoint_sec": 0.20,
+    "deadband_deg": 0.6,
+    "rate_limit_dps": 220.0
+  },
+
+  "rotation": {
+    "robot_axis_world": [0.0, 0.0, 1.0],
+    "sign": -1.0,
+    "min_deg": -40.0,
+    "max_deg": 40.0,
+    "tau_setpoint_sec": 0.20,
+    "deadband_deg": 0.8,
+    "rate_limit_dps": 180.0
+  },
+
+  "logging": {
+    "flush_every_samples": 50
+  },
+
+  "plot": {
+    "ring_length_samples": 1500,
+    "window_sec": 12.0,
+    "update_ms": 50
+  }
+}
