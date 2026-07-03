@@ -59,6 +59,7 @@ Additional technical documentation is available in:
 - [UDP LabVIEW protocol](docs/udp_labview_protocol.md)
 - [Calibration procedure](docs/calibration.md)
 - [LabVIEW VI notes](docs/labview_vi.md)
+- [Testing checklist](docs/testing_checklist.md)
 
 ## Requirements
 
