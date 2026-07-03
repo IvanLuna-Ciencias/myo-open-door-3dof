@@ -54,6 +54,7 @@ myo-open-door-3dof/
 Additional technical documentation is available in:
 
 - [Windows setup](docs/setup_windows.md)
+- [Myo acquisition](docs/myo_acquisition.md)
 - [UDP LabVIEW protocol](docs/udp_labview_protocol.md)
 - [Calibration procedure](docs/calibration.md)
 
