@@ -40,10 +40,10 @@ import numpy as np
 # ========= CONFIG FIJA (sin prompts) =========
 SDK_PATH = os.environ.get(
     "MYO_SDK_PATH",
-    r"C:\Users\Ivan Luna\Downloads\myo-sdk-win-0.9.0\myo-sdk-win-0.9.0"
+    r"C:\SDKs\myo-sdk-win-0.9.0\myo-sdk-win-0.9.0"
 )
 
-BASE_DIR = Path("Myo_PuertasAbiertas_3DOF")
+BASE_DIR = Path("outputs")
 USUARIO = "puertas_abiertas"
 EJERCICIO = "demo_3dof"
 NOTAS = ""
