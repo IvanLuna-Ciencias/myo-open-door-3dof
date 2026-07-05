@@ -164,3 +164,9 @@ Check that:
 ## Notes
 
 This repository is an initial open-door demo for testing Myo-based acquisition, signal processing and LabVIEW communication before integrating the full multimodal EEG–sEMG–IMU motor intention detection pipeline.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+This license applies to the source code and documentation developed for this repository. External software, SDKs, drivers and hardware-specific tools remain subject to their respective licenses.
