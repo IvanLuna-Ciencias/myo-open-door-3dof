@@ -55,6 +55,7 @@ Additional technical documentation is available in:
 
 - [Windows setup](docs/setup_windows.md)
 - [Configuration file](docs/configuration.md)
+- [External dependencies](docs/external_dependencies.md)
 - [Myo acquisition](docs/myo_acquisition.md)
 - [UDP LabVIEW protocol](docs/udp_labview_protocol.md)
 - [Calibration procedure](docs/calibration.md)
@@ -64,10 +65,11 @@ Additional technical documentation is available in:
 ## Requirements
 
 - Windows
-- Python 3.10 virtual environment
-- Myo SDK for Windows
-- Myo Connect running
-- Myo Armband paired and connected
+- Python 3.10
+- Myo Armband and original USB dongle
+- Myo Connect installed and running
+- Myo SDK for Windows 0.9.0
+- Python dependencies listed in `requirements.txt`
 - LabVIEW VI configured to receive UDP packets
 
 Python dependencies are listed in:
@@ -153,11 +155,14 @@ Unable to connect to Myo Connect. Is Myo Connect running?
 
 Check that:
 
+- Myo Connect is installed.
 - Myo Connect is open.
 - The Myo Armband is charged.
 - The Myo Armband is paired and connected.
 - The Bluetooth adapter is connected.
 - The Myo SDK path is correctly configured.
+
+The Myo SDK alone is not sufficient to connect the armband. Myo Connect is a separate external application.
 
 ---
 
