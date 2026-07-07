@@ -97,11 +97,14 @@ This means that the script loaded the configuration and reached the Myo connecti
 
 Before running a real test, verify:
 
+- Myo Connect is installed.
 - Myo Connect is open.
 - The Myo Armband is charged.
 - The Myo Armband is paired.
 - The Bluetooth adapter is connected.
 - The Myo SDK path is correctly configured.
+
+The test is considered portable only after the repository is cloned, the Python environment is reconstructed, Myo Connect and the SDK are installed independently, and the Myo Armband connects successfully.
 
 ---
 

@@ -17,6 +17,24 @@ The following software is required:
 - LabVIEW
 - Git
 
+## Myo Connect Installation
+
+Myo Connect is a separate application required to pair the Myo Armband and provide the background service used by the Myo SDK.
+
+The Myo SDK directory does not include a working Myo Connect installation.
+
+Before running the Python script:
+
+1. Install Myo Connect for Windows.
+2. Connect the original Myo USB dongle.
+3. Open Myo Connect.
+4. Pair the Myo Armband.
+5. Leave Myo Connect running in the Windows system tray.
+
+The project cannot communicate with the Myo Armband if Myo Connect is not installed and running.
+
+Myo Connect is external software and is not distributed under the MIT License of this repository.
+
 The Myo Armband must be charged, paired and connected through Myo Connect before running the Python script.
 
 ---
@@ -305,3 +323,12 @@ Before running the demo, verify:
 - The Myo SDK path is configured.
 - The LabVIEW VI is open.
 - The UDP host and port match between Python and LabVIEW.
+
+### Tested Version
+
+The project was tested with:
+
+```text
+Myo Connect: 1.0.1
+Myo SDK for Windows: 0.9.0
+Python: 3.10.11
