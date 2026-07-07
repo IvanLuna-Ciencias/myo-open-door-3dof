@@ -17,6 +17,8 @@ outputs/*.csv
 outputs/*.json
 data/raw/
 data/processed/
+outputs/**
+!outputs/README.md
 
 # IDE
 .vscode/
