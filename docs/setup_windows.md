@@ -21,7 +21,39 @@ The Myo Armband must be charged, paired and connected through Myo Connect before
 
 ---
 
-## 2. Repository Location
+## 2. Obtaining the Myo SDK
+
+This project requires the Myo SDK for Windows version 0.9.0.
+
+The SDK used during development was obtained from the following third-party repository:
+
+- [pcernek/MyoSDK](https://github.com/pcernek/MyoSDK)
+
+> **Important:** This is a third-party repository containing an adaptation or archived copy of the Myo SDK. It is not maintained as part of this project and should not be considered an official distribution by this repository's author.
+
+To obtain the files, either download the repository as a ZIP file from GitHub or clone it:
+
+```powershell
+cd C:\SDKs
+git clone https://github.com/pcernek/MyoSDK.git
+```
+
+After cloning, the expected SDK folder is:
+
+```text
+C:\SDKs\MyoSDK\myo-sdk-win-0.9.0
+```
+
+Configure the SDK path for the current PowerShell session:
+
+```powershell
+$env:MYO_SDK_PATH="C:\SDKs\MyoSDK\myo-sdk-win-0.9.0"
+```
+
+The Myo SDK is external software and remains subject to its own license agreement. It is not distributed under the MIT License of this repository.
+---
+
+## 3. Repository Location
 
 Recommended local repository location:
 
@@ -37,7 +69,7 @@ cd C:\GitHub\myo-open-door-3dof
 
 ---
 
-## 3. Python Virtual Environment
+## 4. Python Virtual Environment
 
 This project was tested using a Python 3.10 virtual environment.
 
@@ -61,7 +93,7 @@ After activation, PowerShell should show the environment name at the beginning o
 
 ---
 
-## 4. Install Python Dependencies
+## 5. Install Python Dependencies
 
 With the virtual environment activated, install the required Python packages:
 
@@ -83,7 +115,7 @@ Dependencies OK
 
 ---
 
-## 5. Myo SDK Path
+## 6. Myo SDK Path
 
 The Python script requires the Myo SDK for Windows.
 
@@ -111,7 +143,7 @@ The Python script first checks the `MYO_SDK_PATH` environment variable. If the v
 
 ---
 
-## 6. Myo Connect
+## 7. Myo Connect
 
 Before running the demo:
 
@@ -129,7 +161,7 @@ Unable to connect to Myo Connect. Is Myo Connect running?
 
 ---
 
-## 7. LabVIEW Setup
+## 8. LabVIEW Setup
 
 The LabVIEW VI must be open and configured to receive UDP packets.
 
@@ -150,7 +182,7 @@ All values are sent in radians.
 
 ---
 
-## 8. Running the Demo
+## 9. Running the Demo
 
 From the repository folder, run:
 
@@ -169,7 +201,7 @@ The script will:
 
 ---
 
-## 9. Calibration Procedure
+## 10. Calibration Procedure
 
 The demo uses a two-stage calibration process.
 
@@ -195,7 +227,7 @@ After this calibration, the system starts sending setpoints to LabVIEW.
 
 ---
 
-## 10. Keyboard Controls
+## 11. Keyboard Controls
 
 | Key | Function |
 |---|---|
@@ -205,7 +237,7 @@ After this calibration, the system starts sending setpoints to LabVIEW.
 
 ---
 
-## 11. Output Files
+## 12. Output Files
 
 The script generates session files in CSV and JSON format.
 
@@ -213,7 +245,7 @@ Generated acquisition outputs are ignored by Git to avoid uploading experimental
 
 ---
 
-## 12. Troubleshooting
+## 13. Troubleshooting
 
 ### Myo Connect error
 
@@ -262,7 +294,7 @@ The first path should point to the active virtual environment:
 
 ---
 
-## 13. Basic Verification Checklist
+## 14. Basic Verification Checklist
 
 Before running the demo, verify:
 
