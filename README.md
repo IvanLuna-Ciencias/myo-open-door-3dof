@@ -1,5 +1,20 @@
 # Myo Open Door 3DOF Demo
 
+<!-- DEMO-GIF -->
+
+<p align="center">
+  <img src="docs/media/operation.gif"
+       alt="Myo Open Door 3DOF operation demonstration"
+       width="720">
+</p>
+
+<p align="center">
+  <a href="https://github.com/IvanLuna-Ciencias/myo-open-door-3dof/releases/tag/v0.2.0">
+    <strong>Watch the complete system demonstration</strong>
+  </a>
+</p>
+
+
 Real-time demo using a **Myo Armband** to generate three upper-limb setpoints for a LabVIEW-based exoskeleton interface.
 
 The system estimates shoulder, elbow and rotation setpoints from Myo IMU and EMG signals, then sends them to LabVIEW through UDP.
@@ -19,6 +34,46 @@ The output consists of three joint setpoints in radians:
 ```text
 q_shoulder_rad, q_elbow_rad, q_rot_rad
 ```
+
+---
+
+## System Demonstration
+
+The complete system integrates Myo Armband EMG and IMU acquisition, real-time Python processing, UDP communication, LabVIEW and a three-degree-of-freedom robotic platform.
+
+### Complete System
+
+![Complete Myo Open Door 3DOF system](docs/media/system_overview.jpg)
+
+### Myo Armband Placement
+
+The Myo Armband provides the EMG and inertial measurements used to estimate the user's upper-limb commands.
+
+![Myo Armband placement]($myoPlacement)
+
+### Real-Time Python Interface
+
+The Python application performs calibration, signal processing and visualization of the estimated shoulder, elbow and rotation setpoints.
+
+![Python real-time interface](docs/media/python_realtime_gui.jpg)
+
+### LabVIEW Interface
+
+LabVIEW receives the three joint setpoints through UDP and transfers them to the robotic control environment.
+
+![LabVIEW front panel](docs/media/labview_front_panel.jpg)
+
+### Robotic Platform Operation
+
+The processed commands are used as references for real-time operation of the robotic platform.
+
+![Robotic platform demonstration](docs/media/robot_demo.jpg)
+
+### Example Session Output
+
+The application can save the processed signals and estimated joint commands for later inspection.
+
+![Example session output](docs/media/example_session_output.jpg)
 
 ---
 
