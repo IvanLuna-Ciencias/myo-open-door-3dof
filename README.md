@@ -1,5 +1,20 @@
 # Myo Open Door 3DOF Demo
 
+<!-- DEMO-GIF -->
+
+<p align="center">
+  <img src="docs/media/operation.gif"
+       alt="Myo Open Door 3DOF operation demonstration"
+       width="720">
+</p>
+
+<p align="center">
+  <a href="https://github.com/IvanLuna-Ciencias/myo-open-door-3dof/releases/tag/v0.2.0">
+    <strong>Watch the complete system demonstration</strong>
+  </a>
+</p>
+
+
 Real-time demo using a **Myo Armband** to generate three upper-limb setpoints for a LabVIEW-based exoskeleton interface.
 
 The system estimates shoulder, elbow and rotation setpoints from Myo IMU and EMG signals, then sends them to LabVIEW through UDP.
