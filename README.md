@@ -49,7 +49,7 @@ The complete system integrates Myo Armband EMG and IMU acquisition, real-time Py
 
 The Myo Armband provides the EMG and inertial measurements used to estimate the user's upper-limb commands.
 
-![Myo Armband placement]($myoPlacement)
+![Myo Armband placement](docs/media/myo_placement.jpg)
 
 ### Real-Time Python Interface
 
